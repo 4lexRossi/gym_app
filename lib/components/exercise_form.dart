@@ -1,9 +1,32 @@
 import 'package:flutter/material.dart';
 
-class ExerciseForm extends StatelessWidget {
+class ExerciseForm extends StatefulWidget {
+  final void Function(String, num, double) onSubmit;
+
+  const ExerciseForm(this.onSubmit, {super.key});
+
+  @override
+  State<ExerciseForm> createState() => _ExerciseFormState();
+}
+
+class _ExerciseFormState extends State<ExerciseForm> {
   final titleController = TextEditingController();
+
   final setController = TextEditingController();
+
   final weightController = TextEditingController();
+
+  _submitForm() {
+    final title = titleController.text;
+    final set = num.tryParse(setController.text) ?? 0;
+    final weight = double.tryParse(weightController.text) ?? 0.0;
+
+    if (title.isEmpty || set <= 0) {
+      return;
+    }
+
+    widget.onSubmit(title, set, weight);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,18 +38,24 @@ class ExerciseForm extends StatelessWidget {
           children: [
             TextFormField(
               controller: titleController,
+              onFieldSubmitted: (_) => _submitForm(),
               decoration: const InputDecoration(
                 labelText: 'Exercise',
               ),
             ),
             TextFormField(
               controller: setController,
+              onFieldSubmitted: (_) => _submitForm(),
+              keyboardType: TextInputType.number,
               decoration: const InputDecoration(
                 labelText: 'Sets',
               ),
             ),
             TextFormField(
               controller: weightController,
+              keyboardType:
+                  const TextInputType.numberWithOptions(decimal: true),
+              onFieldSubmitted: (_) => _submitForm(),
               decoration: const InputDecoration(
                 labelText: 'Weight',
               ),
@@ -36,9 +65,11 @@ class ExerciseForm extends StatelessWidget {
               children: [
                 TextButton(
                   onPressed: () {
-                    print(titleController);
-                    print(setController);
-                    print(weightController);
+                    final title = titleController.text;
+                    final set = num.tryParse(setController.text) ?? 0;
+                    final weight =
+                        double.tryParse(weightController.text) ?? 0.0;
+                    widget.onSubmit(title, set, weight);
                   },
                   style: TextButton.styleFrom(
                     foregroundColor: Colors.blue,
