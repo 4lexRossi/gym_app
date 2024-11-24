@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:gym_app/components/exercise_form.dart';
+import 'package:gym_app/components/exercise_list.dart';
+import 'package:gym_app/components/exercise_user.dart';
 import 'package:gym_app/models/exercise.dart';
 
 main() => runApp(const MyGym());
@@ -13,11 +16,6 @@ class MyGym extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
-  final _exercises = [
-    Exercise(id: 'E1', title: 'title1', set: 3, weight: 25.0),
-    Exercise(id: 'E2', title: 'title2', set: 4, weight: 15.0)
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +23,6 @@ class MyHomePage extends StatelessWidget {
         title: const Text('Personal Training'),
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Container(
@@ -36,13 +33,7 @@ class MyHomePage extends StatelessWidget {
               child: Text('Graph'),
             ),
           ),
-          Column(
-            children: _exercises.map((ex) {
-              return Card(
-                child: Text(ex.title),
-              );
-            }).toList(),
-          )
+          ExerciseUser(),
         ],
       ),
     );
