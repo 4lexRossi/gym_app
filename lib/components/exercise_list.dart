@@ -10,54 +10,58 @@ class ExerciseList extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 330,
-      child: ListView.builder(
-        itemCount: exercises.length,
-        itemBuilder: (context, index) {
-          final ex = exercises[index];
-          return Card(
-              child: Row(
-            children: [
-              Container(
-                margin: const EdgeInsets.symmetric(
-                  horizontal: 15,
-                  vertical: 10,
+      child: exercises.isEmpty
+          ? Column(
+              children: [
+                const SizedBox(height: 20),
+                Text(
+                  'No exercise registred',
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
-                decoration: BoxDecoration(
-                    border: Border.all(
-                      color: const Color.fromARGB(255, 1, 98, 177),
-                      width: 2,
-                    ),
-                    borderRadius: const BorderRadius.all(Radius.circular(5))),
-                padding: const EdgeInsets.all(10),
-                child: Text(
-                  'Sets: ${ex.set}',
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                    color: Color.fromARGB(255, 1, 98, 177),
+                const SizedBox(height: 20),
+                SizedBox(
+                  height: 200,
+                  child: Image.asset(
+                    'assets/images/waiting.png',
+                    fit: BoxFit.cover,
                   ),
                 ),
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    ex.title,
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
+              ],
+            )
+          : ListView.builder(
+              itemCount: exercises.length,
+              itemBuilder: (context, index) {
+                final ex = exercises[index];
+                return Card(
+                  elevation: 5,
+                  margin: const EdgeInsets.symmetric(
+                    vertical: 8,
+                    horizontal: 5,
+                  ),
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      radius: 30,
+                      child: Padding(
+                        padding: const EdgeInsets.all(6.0),
+                        child: FittedBox(
+                          child: Column(
+                            children: [
+                              const Text('Sets'),
+                              Text('${ex.set}'),
+                            ],
+                          ),
+                        ),
+                      ),
                     ),
+                    title: Text(
+                      ex.title,
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                    subtitle: Text('Weight: ${ex.weight.toStringAsFixed(2)}kg'),
                   ),
-                  Text(
-                    'Peso ${ex.weight.toStringAsFixed(2)}',
-                    style: const TextStyle(color: Colors.grey),
-                  ),
-                ],
-              )
-            ],
-          ));
-        },
-      ),
+                );
+              },
+            ),
     );
   }
 }
