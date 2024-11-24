@@ -49,7 +49,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final _exercises = [
+  final List<Exercise> _exercises = [
     Exercise(id: 'E1', title: 'title1', set: 3, weight: 25.2),
     Exercise(id: 'E2', title: 'title2', set: 4, weight: 15.4),
   ];
@@ -94,9 +94,9 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            SizedBox(
+            const SizedBox(
               width: double.infinity,
-              child: const Card(
+              child: Card(
                 color: Colors.blue,
                 elevation: 5,
                 child: Text('Graph'),
